@@ -15,5 +15,13 @@ urlpatterns = [
     path('update_expenses/<int:id>/',views.update_expenses , name= "update_expenses"),
     # path('update_expenses/updata_expenses/<int:id>/',views.updata_expenses , name = "updata_expenses"),
     
-     
+    path('PayrollExpenses/', views.payrollExpenses, name='PayrollExpenses'),
+    path('add_payrollExpenses' , views.add_payrollExpenses, name ='add_payrollExpenses'),
+    path('delete_payrollExpenses/<int:id>/' ,views.delete_payrollExpenses, name = 'delete_payrollExpenses'),
+    path('update_payrollExpenses/<int:id>/', views.update_payrollExpenses , name = 'update_payrollExpenses'),
+    
+    path('PayrollExpenseEntry/', views.PayrollExpenseEntry, name='PayrollExpenseEntry'),
+    
+    
+    
 ]

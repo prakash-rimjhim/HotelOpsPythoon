@@ -1,6 +1,6 @@
 from datetime import date
 from django.shortcuts import render,redirect
-from .models import Outlet,Expenses
+from .models import Outlet,Expenses,PayrollExpenses, PayrollExpensesEntry
 
 def index(request):
     mem = Outlet.objects.filter(IsDelete=False)
@@ -79,4 +79,55 @@ def update_expenses(request , id):
 #     return redirect("/expenses")
 
 
- 
+def payrollExpenses(request):
+    mem = PayrollExpenses.objects.filter(IsDelete=False)
+    return render(request, 'payrollExpenses.html' ,{'mem' :mem})
+
+def add_payrollExpenses(request):
+    if request.method == "POST":
+        title = request.POST['title']
+        obj = PayrollExpenses.objects.create(title = title)
+        obj.save()
+        return (redirect('/PayrollExpenses'))
+    return render(request,'add_payrollExpenses.html')
+
+def delete_payrollExpenses(request,id):
+    mem = PayrollExpenses.objects.get(id = id)
+    mem.IsDelete = True
+    mem.ModifyBy = 1
+    mem.save()
+    return (redirect('/PayrollExpenses'))
+
+def update_payrollExpenses(request , id):
+    if request.method == "POST":
+        title = request.POST["title"]
+        rem = PayrollExpenses.objects.get(id = id)
+        rem.title = title
+        rem.save()    
+        return (redirect('/PayrollExpenses'))
+    rem = PayrollExpenses.objects.get(id = id)
+    return render(request,'update_PayrollExpenses.html',{'rem':rem})
+    
+    
+
+def PayrollExpenseEntry(request):
+    if request.method == "POST":
+        TotalItem = request.POST["TotalItem"]
+        for x in range(int(TotalItem)):
+            Amount=request.POST["Amount_"+str(x)]
+            ExpenseID=request.POST["ExpenseID_"+str(x)]
+            v=PayrollExpenses.objects.get(id=ExpenseID)
+            obj = PayrollExpensesEntry.objects.create(ExpenseID =v ,Amount=Amount)
+            obj.save()
+        
+        # title = request.POST['title']
+        # obj = Outlet.objects.create(title = title)
+        # obj.save()
+        #return (redirect('/'))
+    mem = PayrollExpenses.objects.filter(IsDelete=False)
+    return render(request,'PayrollExpenseEntry.html',{'mem' :mem})
+
+
+        
+        
+    
