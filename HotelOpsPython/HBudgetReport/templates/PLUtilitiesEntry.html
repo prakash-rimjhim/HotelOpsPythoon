@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> PLUtilities</title>
+</head>
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+
+<body>
+    <div class="container1">
+        <h1>PLUtilities Entry</h1>
+        <form action="{%url 'PLUtilitiesEntry' %}" method = "post">
+            {% csrf_token %}
+            <lable>Month</lable>
+            <span>
+                    <select name="EntryMonth">
+                        <option>Jan</option>
+                        <option>Feb</option>
+                        <option>Mar</option>
+                        <option>Apr</option>
+                        <option>May</option>
+                        <option>Jun</option>
+                        <option>Jul</option>
+                        <option>Aug</option>
+                        <option>Sep</option>
+                        <option>Oct</option>
+                        <option>Nov</option>
+                        <option>Dec</option>
+                        
+                    </select>
+
+            </span>
+            <lable>Year</lable>
+            <span>
+                    <select name="EntryYear">
+                       <option>2023</option>
+                    </select>
+
+            </span>
+
+            <br/>
+            <br>
+            <table id="title" border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                    <th>Utilities </th>
+                    <th>Amount</th>
+                    
+                </thead>
+                {% for x in mem%}
+                <tr>                
+                    <td>{{x.title}}</td> 
+                    <td><input type="text" name="Amount_{{ forloop.counter0 }}"/>
+                        <input name="ExpenseID_{{ forloop.counter0 }}" type="hidden" value="{{x.id}}" type="text"/>
+                    </td>
+
+                </tr>
+                {% if forloop.last %}
+                <input  type="hidden" name="TotalItem" value="{{ forloop.counter0 }}"/>
+                {% endif %}
+                {% endfor %}
+
+            </table>
+            
+            <button type="submit" id="new">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>

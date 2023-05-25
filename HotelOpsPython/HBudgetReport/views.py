@@ -1,6 +1,6 @@
 from datetime import date
 from django.shortcuts import render,redirect
-from .models import Outlet,Expenses,PayrollExpenses, PayrollExpensesEntry
+from .models import Outlet,Expenses,PayrollExpenses, PayrollExpensesEntry,PLUtilitiesMaster
 
 def index(request):
     mem = Outlet.objects.filter(IsDelete=False)
@@ -128,6 +128,53 @@ def PayrollExpenseEntry(request):
     return render(request,'PayrollExpenseEntry.html',{'mem' :mem})
 
 
+        
+def pLUtilitiesMaster(request):
+    mem = PLUtilitiesMaster.objects.filter(IsDelete = False)
+    return render(request , 'plutilities.html',{'mem':mem})
+    
+def add_plutilities(request):
+    if request.method == "POST":
+        title = request.POST['title']
+        obj = PLUtilitiesMaster.objects.create(title = title)
+        obj.save()
+        return (redirect('/PLUtilitiesMaster'))
+    return render(request,'add_plutilities.html')
+
+
+def delete_plutilities(request,id):
+    mem = PLUtilitiesMaster.objects.get(id = id)
+    mem.IsDelete = True
+    mem.ModifyBy = 1
+    mem.save()
+    return (redirect('/PLUtilitiesMaster'))
+    
+
+def update_plutilities(request , id):
+    if request.method == "POST":
+        title = request.POST["title"]
+        mem = PLUtilitiesMaster.objects.get(id = id)
+        mem.title = title
+        mem.save()    
+        return (redirect('/PLUtilitiesMaster'))
+    mem = PLUtilitiesMaster.objects.get(id = id)
+    return render(request,'update_plutilities.html',{'mem':mem})
+
+def PutilitiesEntry(request):
+    if request.method == "POST":
+        TotalItem = request.POST["TotalItem"]
+        for x in range(int(TotalItem)):
+            Amount = request.POST["Amount_" + str(x)]
+            ExpenseID = request.POST["Expense_ID" + str(x)]
+            v = PLUtilitiesMaster.objects.get(id = ExpenseID)
+            obj = PLUtilitiesMaster.objects.create(ExpenseID = v , Amount = Amount)
+            obj.save()
+    mem = PLUtilitiesMaster.objects.filter(IsDelete = False)
+    return render(request, 'PLUtilitiesEntry.html' ,{'mem':mem})
+            
+    
+    
+    
         
         
     

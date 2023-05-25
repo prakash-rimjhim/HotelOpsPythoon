@@ -23,5 +23,12 @@ urlpatterns = [
     path('PayrollExpenseEntry/', views.PayrollExpenseEntry, name='PayrollExpenseEntry'),
     
     
+    path('PLUtilitiesMaster/',views.pLUtilitiesMaster, name = 'PLUtilitiesMaster'),
+    path('add_plutilities/', views.add_plutilities , name = 'add_plutilities'),
+    path('delete_plutilities/<int:id>/',views.delete_plutilities, name = 'delete_plutilities'),
+    path('update_plutilities/<int:id>/', views.update_plutilities, name = 'update_plutilities'),
+    
+    path('PLUtilitiesEntry/', views.PutilitiesEntry, name='PLUtilitiesEntry'),
+        
     
 ]

@@ -22,13 +22,12 @@
                 </thead>
                 {% for x in mem%}
                 <tr>
-                    
+                                       
                     <td>{{x.title}}</td> 
                     <td><input type="text" name="Amount_{{ forloop.counter0 }}"/>
                         <input name="ExpenseID_{{ forloop.counter0 }}" type="hidden" value="{{x.id}}" type="text"/>
                     </td>
-                   
-                                              
+                                                                
                 </tr>
                 {% if forloop.last %}
                 <input type="text" name="TotalItem" value="{{ forloop.counter0 }}"/>
